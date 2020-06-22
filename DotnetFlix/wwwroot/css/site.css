@@ -24,11 +24,6 @@ a {
   border-color: #1861ac;
 }
 
-#login-link {
-    color: #fff;
-    color: #a2d5f2;
-}
-
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -64,59 +59,13 @@ html {
 }
 
 body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
 }
-
-
-/*** CHANGES TO STANDARD */
-/* Header
--------------------------------------------------- */
-header .header-top {
-    height: 60px;
-}
-
-header .menu-content-right {
-    top: 0;
-    right: 0;
-    margin-left: 54px;
-}
-
-header .menu-content-right input {
-    min-width: 60px;
-    margin: 0 !important;
-    padding-left: 4px !important;
-}
-
-.search-divider {
-    border-right: 2px solid #eee;
-}
-
-/* Menu
--------------------------------------------------- */
-.menu-content-right .fa-search,
-.menu-content-right #cart-link {
-    color: #fff;
-}
-
-    .menu-content-right .fa-search:hover,
-    .menu-content-right #cart-link:hover {
-        cursor: pointer;
-        color: #a2d5f2;
-    }
-
-/* Override Bootstrap doropdown-menu class */
-.dropdown-menu {
-    max-width: 200px;
-}
-
-.dropdown-menu .fas {
-    width: 30px;
-}
-
-
 .footer {
-    position: relative;
-    margin-top: 4rem;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
 }
