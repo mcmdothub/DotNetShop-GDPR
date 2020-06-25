@@ -34,6 +34,11 @@ namespace DotnetFlix.Controllers
             return View();
         }
 
+        public IActionResult TermsofUse()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             return View();
