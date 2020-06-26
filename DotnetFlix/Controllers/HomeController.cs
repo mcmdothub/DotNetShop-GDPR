@@ -19,6 +19,11 @@ namespace DotnetFlix.Controllers
             return View();
         }
 
+        public IActionResult Cookies()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

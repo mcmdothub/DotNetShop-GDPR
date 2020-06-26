@@ -25,6 +25,8 @@
     <div id="preloder">
         <div class="loader"></div>
     </div>
+    <div id="dimmer"></div>
+
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
@@ -56,14 +58,14 @@
             <ul>
                 <li class="active"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-area="" asp-controller="Products" asp-action="Index">Shop</a></li>
-                @*<li>
+                <li>
                     <a href="#">Pages</a>
                     <ul class="header__menu__dropdown">
                         <li><a href="./shop-details.html">Shop Details</a></li>
                         <li><a href="./shoping-cart.html">Shoping Cart</a></li>
                         <li><a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Check Out</a></li>
                     </ul>
-                </li>*@
+                </li>
                 <li><a asp-area="" asp-controller="Home" asp-action="About">Contact</a></li>
             </ul>
         </nav>
@@ -91,68 +93,96 @@
                     </div>
                 </div>
                 @*<div class="col-lg-4">*@
-                    <nav class="header__menu navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                        <div class="container position-relative">
-                            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DotnetFlix</a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                                <ul class="navbar-nav flex-grow-1">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                    </li>
+                <nav class="header__menu navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                    <div class="container position-relative">
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DotnetFlix</a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                </li>
 
-                                    <!--  USER LOGIN PARTIAL VIEW  -->
-                                    <partial name="_LoginPartial" />
+                                <!--  USER LOGIN PARTIAL VIEW  -->
+                                <partial name="_LoginPartial" />
 
-                                    <div class="form-inline pl-1 pr-0 mr-sm-2 cart-zindex" id="cart-container">
-                                        <a id="cart-open">
-                                            <span id="cart-link"><i class="fas fa-cart-arrow-down pl-2"></i><span class="badge m-0 pl-1 pr-0" id="cart-item-count"></span></span>
-                                        </a>
+                                <div class="form-inline pl-1 pr-0 mr-sm-2 cart-zindex" id="cart-container">
+                                    <a id="cart-open">
+                                        <span id="cart-link"><i class="fas fa-cart-arrow-down pl-2"></i><span class="badge m-0 pl-1 pr-0" id="cart-item-count"></span></span>
+                                    </a>
 
-                                        <partial name="_CartDropPreviewPartial" />
+                                    <partial name="_CartDropPreviewPartial" />
 
-                                    </div>
-
-                                </ul>
-                            </div>
-
-                            <!--  CART  -->
-                            <div class="position-absolute menu-content-right">
-                                <div class="d-flex d-inline p-0 m-0 ml-auto position-relative">
-
-                                    <form asp-controller="Products" asp-action="Index" method="get" class="form-inline" name="search">
-                                        <input class="form-control p-0 m-0" autofocus type="search" name="search" placeholder="search..." aria-label="Search">
-                                    </form>
-
-                                    <div class="form-inline">
-                                        <a class="pl-2 pr-2 search-divider" onclick="document.forms['search'].submit();"><i class="fas fa-search"></i></a>
-                                    </div>
-
-                                    
                                 </div>
 
-                                
+
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <li class="nav-item d-lg-none">
+                                        <div class="dropdown">
+                                            <button type="button" class="nav-link btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-user"></i> Your Account
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" asp-action="OrderHistory" asp-controller="Order"><i class="fas fa-list"></i> Orders</a>
+                                                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="fas fa-user-cog"></i> Profile</a>
+                                                <div class="dropdown-divider"></div>
+                                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                    <button type="submit" class="dropdown-item btn btn-link"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item d-lg-none">
+                                        <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                    </li>
+                                    <li class="nav-item d-lg-none">
+                                        <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+                        <!--  CART  -->
+                        <div class="position-absolute menu-content-right">
+                            <div class="d-flex d-inline p-0 m-0 ml-auto position-relative">
+
+                                <form asp-controller="Products" asp-action="Index" method="get" class="form-inline" name="search">
+                                    <input class="form-control p-0 m-0" autofocus type="search" name="search" placeholder="search..." aria-label="Search">
+                                </form>
+
+                                <div class="form-inline">
+                                    <a class="pl-2 pr-2 search-divider" onclick="document.forms['search'].submit();"><i class="fas fa-search"></i></a>
+                                </div>
+
 
                             </div>
+
 
 
                         </div>
-                    </nav>
-                @*</div>*@             
+
+
+                    </div>
+                </nav>
+                @*</div>*@
             </div>
 
-           
 
-            
+
+
 
             <div class="humberger__open">
                 <i class="fa fa-bars"></i>
@@ -322,7 +352,7 @@
             })(jQuery);
     </script>
 
-    
+
 
     @RenderSection("Scripts", required: false)
 </body>
